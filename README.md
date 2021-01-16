@@ -33,16 +33,16 @@
 Итоговые данные должны представлять собой список документов вида:
 ```json
 {
-    "number": "7800000000001",
+    "number": "7800000000000",
     "actions": [
         {
           "type": "create",
-          "last": null,
+          "last": "created_at": ISODate('2016-01-01T01:33:59'),
           "count": 0
         },
         {
           "type": "read",
-          "last": null,
+          "last": "created_at": ISODate('2016-01-01T01:21:13'),
           "count": 0
         },
         {
