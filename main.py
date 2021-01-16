@@ -3,6 +3,27 @@
 
 import json
 import os
+from datetime import datetime
+
+
+def change_res_file(input_json, res_json):
+    actions_list_input = input_json["sessions"][0]['actions']
+    actions_list_res = res_json['actions']
+    for action_inp in actions_list_input:
+        type = action_inp['type']
+        time = datetime.strptime(action_inp['created_at'][9:-2], '%Y-%m-%dT%H:%M:%S')
+        for action_res in actions_list_res:
+            if action_res['type'] == type:
+                #print(action_res['count'])
+                action_res['count'] += 1
+
+    """
+    res_file.seek(0)
+    res_file.write(json.dumps(res_json, indent=4)) # Перезаписываем
+    res_file.truncate()
+    res_file.seek(0)
+    print(res_file.read())
+    """
 
 
 def create_pattern_json(number):
@@ -32,14 +53,22 @@ if __name__ == '__main__':
         for file_name in i[2]:      # Для каждого файла в каталоге Account
             try:
                 with open(i[0] + '/' + file_name, 'r', encoding='utf8') as input_file:  # Читаем входящий файл
-                    input_json = json.load(input_file)      # Преобразуем его в объект класса json
+                    input_json = json.loads(input_file.read())      # Преобразуем его в объект класса json
                     res_path = 'Results-data/' + str(input_json['number']) + '.json'    # Запоминаем путь до результирующего файла
-                    if not os.path.isfile(res_path):    # Если рез. файл ещё пустой, то заполняем его по шаблону
+                    if not os.path.isfile(res_path):    # Если рез. файла ещё нет, то создаём и заполняем его по шаблону
+                        print(res_path, ' создали')
                         with open(res_path, 'w+', encoding='utf8') as res_file:
                             res_file.write(create_pattern_json(input_json['number']))
-                    else:   # Если рез. файл уже создан, то начинаем его дополнять новой информацией
-                        print('a')
-                        #print(input_json['sessions']['actions'])
+                    # Начинаем дополнять рез. файл новой информацией
+                    with open(res_path, 'r+', encoding='utf8') as res_file:
+                        res_json = json.loads(res_file.read())  # Преобразовываем в json объект
+                        change_res_file(input_json, res_json)
+                        res_file.seek(0)
+                        res_file.write(json.dumps(res_json, indent=4))  # Перезаписываем
+                        res_file.truncate()
+                        res_file.seek(0)
+
+
 
             except IOError:
                 print("An IOError has occurred!")
