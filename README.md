@@ -38,12 +38,12 @@
         {
           "type": "create",
           "last": "ISODate('2016-01-01T01:33:59')",
-          "count": 0
+          "count": 12
         },
         {
           "type": "read",
           "last": "ISODate('2016-01-01T01:21:13')",
-          "count": 0
+          "count": 12
         },
         {
           "type": "update",
