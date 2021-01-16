@@ -37,12 +37,12 @@
     "actions": [
         {
           "type": "create",
-          "last": "created_at": "ISODate('2016-01-01T01:33:59')",
+          "last": "ISODate('2016-01-01T01:33:59')",
           "count": 0
         },
         {
           "type": "read",
-          "last": "created_at": "ISODate('2016-01-01T01:21:13')",
+          "last": "ISODate('2016-01-01T01:21:13')",
           "count": 0
         },
         {
